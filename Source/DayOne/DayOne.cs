@@ -13,7 +13,7 @@ namespace AoC_2025
             int arrowPosition = 50;
 
             int zeroCount = 0;
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "input.txt");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "Source/DayOne/input.txt");
             string[] lines = File.ReadAllLines(path);
             foreach (string line in lines)
             {
