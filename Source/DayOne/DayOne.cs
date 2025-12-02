@@ -18,7 +18,6 @@ namespace AoC_2025
             foreach (string line in lines)
             {
                 Match match = Regex.Match(line, @"\d+");
-                int prevArrowPosition = arrowPosition;
                 if (match.Success)
                 {
                     int parsedNumber = int.Parse(match.Value);
@@ -53,7 +52,6 @@ namespace AoC_2025
                 }
             }
             Console.WriteLine(zeroCount);
-
         }
     }
 }
