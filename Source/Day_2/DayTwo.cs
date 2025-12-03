@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -7,7 +8,6 @@ namespace AoC_2025
 {
     internal class DayTwo
     {
-
         static IEnumerable<long> ParseRange(string range)
         {
             var parts = range.Split('-');
@@ -37,6 +37,7 @@ namespace AoC_2025
 
         public static void Run()
         {
+            Stopwatch sw = Stopwatch.StartNew();
             string input = "1-14,46452718-46482242,16-35,92506028-92574540,1515128146-1515174322,56453-79759,74-94,798-971,49-66,601-752,3428-4981,511505-565011,421819-510058,877942-901121,39978-50500,9494916094-9494978970,7432846301-7432888696,204-252,908772-990423,21425-25165,1030-1285,7685-9644,419-568,474396757-474518094,5252506279-5252546898,4399342-4505058,311262290-311393585,1895-2772,110695-150992,567521-773338,277531-375437,284-364,217936-270837,3365257-3426031,29828-36350";
 
             long sum = input.Split(',')
@@ -44,8 +45,9 @@ namespace AoC_2025
                             .Where(IsInvalid)
                             .Sum(id => (long)id);
 
+            sw.Stop();
             Console.WriteLine($"Sum of invalid IDs: {sum}");
-
+            Console.WriteLine($"Elapsed time: {sw.ElapsedMilliseconds} ms");
         }
     }
 }

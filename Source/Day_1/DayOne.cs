@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using static System.Net.Mime.MediaTypeNames;
@@ -10,10 +11,12 @@ namespace AoC_2025
     {
         public static void Run()
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
             int arrowPosition = 50;
 
             int zeroCount = 0;
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "Source/DayOne/input.txt");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "Source/Day_1/input.txt");
             string[] lines = File.ReadAllLines(path);
             foreach (string line in lines)
             {
@@ -51,7 +54,9 @@ namespace AoC_2025
                     }
                 }
             }
+            sw.Stop();
             Console.WriteLine(zeroCount);
+            Console.WriteLine($"Elapsed time: {sw.ElapsedMilliseconds} ms");
         }
     }
 }
