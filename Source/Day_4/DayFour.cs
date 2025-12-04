@@ -96,6 +96,7 @@ namespace AoC_2025
                 removedRollPapersIndex.Clear();
             } while (sumPerState != 0);
 
+            Console.WriteLine(sw.ElapsedMilliseconds + " ms");
             Console.WriteLine(sum);
         }
     }

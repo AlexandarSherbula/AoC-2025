@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -7,45 +8,48 @@ namespace AoC_2025
 {
     internal class DayThree
     {
+        private static int DigitAt(string s, int index)
+        {
+            char c = s[index];
+            if (c < '0' || c > '9')
+                throw new ArgumentException($"Invalid character '{c}' at position {index}. Only digits are allowed.");
+            return c - '0';
+        }
+
+        private static int MaxBankJoltage(string bank)
+        {
+            int best = -1;
+            int maxPrefixDigit = DigitAt(bank, 0);
+
+            for (int i = 1; i < bank.Length; i++)
+            {
+                int d = DigitAt(bank, i);
+                int candidate = 10 * maxPrefixDigit + d;
+                if (candidate > best) best = candidate;
+
+                if (d > maxPrefixDigit) maxPrefixDigit = d;
+            }
+
+            return best;
+        }
+
         public static void Run()
         {
+            Stopwatch sw = Stopwatch.StartNew();
             string path = Path.Combine(Directory.GetCurrentDirectory(), "Source/Day_3/input.txt");
+            string[] lines = File.ReadAllLines(path);
 
-            int sumJolt = 0;
-            foreach (string line in File.ReadAllLines(path))
+            long sum = 0;
+            foreach (var bank in lines)
             {
-                string newLine = line;
-                int highestJolt = line.Max();
-                int highestJoltIndex = line.IndexOf((char)highestJolt);
-
-                int result = int.Parse(line.Max().ToString());
-                int secondHighestJolt;
-                int secondHighestJoltIndex;
-                if (highestJoltIndex == line.Length - 1)
-                {
-                    newLine = line.Remove(highestJoltIndex, 1);
-                    secondHighestJolt = newLine.Max();
-                    secondHighestJoltIndex = line.IndexOf((char)secondHighestJolt);
-                }
-                else
-                {
-                    newLine = line.Substring(highestJoltIndex + 1);
-                    secondHighestJolt = newLine.Max();
-                    secondHighestJoltIndex = line.IndexOf((char)secondHighestJolt) + (highestJoltIndex + 1);
-                }
-                
-                int maximumJolt = 0;
-                if (highestJoltIndex <= secondHighestJoltIndex)
-                {
-                    maximumJolt = (highestJolt - 48) * 10 + (secondHighestJolt - 48);
-                }
-                else
-                {
-                    maximumJolt = (secondHighestJolt - 48) * 10 + (highestJolt - 48);
-                }
-                sumJolt += maximumJolt;
+                int max = MaxBankJoltage(bank);
+                sum += max;
             }
-            Console.WriteLine(sumJolt);
+            sw.Stop();
+
+            Console.WriteLine(sw.ElapsedMilliseconds + " ms");
+            Console.WriteLine($"Total: {sum}");
+
         }
     }
 }
