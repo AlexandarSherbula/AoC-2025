@@ -33,22 +33,46 @@ namespace AoC_2025
             return best;
         }
 
+        static string MaxBankJoltage12(string line)
+        {
+            int k = 12;
+            int toRemove = line.Length - k;
+            var stack = new List<char>();
+
+            foreach (char c in line)
+            {
+                while (stack.Count > 0 && toRemove > 0 && stack[stack.Count - 1] < c)
+                {
+                    stack.RemoveAt(stack.Count - 1);
+                    toRemove--;
+                }
+                stack.Add(c);
+            }
+
+            while (stack.Count > k)
+                stack.RemoveAt(stack.Count - 1);
+
+            return new string(stack.ToArray());
+        }
+
+
         public static void Run()
         {
             Stopwatch sw = Stopwatch.StartNew();
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "Source/Day_3/input.txt");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "Source/Day_3/example.txt");
             string[] lines = File.ReadAllLines(path);
 
             long sum = 0;
-            foreach (var bank in lines)
+            foreach (string line in lines)
             {
-                int max = MaxBankJoltage(bank);
+                string maxStr = MaxBankJoltage12(line);
+                long max = long.Parse(maxStr);
                 sum += max;
             }
             sw.Stop();
 
             Console.WriteLine(sw.ElapsedMilliseconds + " ms");
-            Console.WriteLine($"Total: {sum}");
+            Console.WriteLine(sum);
 
         }
     }
