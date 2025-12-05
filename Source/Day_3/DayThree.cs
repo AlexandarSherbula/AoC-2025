@@ -55,7 +55,6 @@ namespace AoC_2025
             return new string(stack.ToArray());
         }
 
-
         public static void Run()
         {
             Stopwatch sw = Stopwatch.StartNew();
@@ -73,7 +72,6 @@ namespace AoC_2025
 
             Console.WriteLine(sw.ElapsedMilliseconds + " ms");
             Console.WriteLine(sum);
-
         }
     }
 }
